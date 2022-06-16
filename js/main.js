@@ -1,4 +1,4 @@
-var films = []
+var films = [];
 var moviesed = [];
 
 var sortType = 1; //Default o'sish tartibida sortlangsn;
@@ -29,6 +29,7 @@ typeSortSelectEl.addEventListener('change', (e) => {
     sortType = e.target.value - 0;
     sortAndRender(sortType, sortBy);
 })
+
 var todoForm = document.querySelector('.main-container');
 var todoInput = document.querySelector('.form-control');
 
@@ -71,10 +72,9 @@ function cloneAndRender(movie) {
     // movieItemElClone.querySelector('[data-element=movie-title]').textContent = `Title: ` + movie.title;
     // movieItemElClone.querySelector('[data-element=movie-year]').textContent = `Year: ` + movie.year;
 
-    // movieItemElClone.querySelector('[data-element=movie-id-films]').textContent = `id: ` + movie.imdbID;
     movieItemElClone.querySelector('[data-element=movie-title-films]').textContent = `Title: ` + movie.Title;
+    movieItemElClone.querySelector('[data-element=movie-type]').textContent = `Title: ` + movie.Type;
     movieItemElClone.querySelector('[data-element=movie-year-films]').textContent = `year: ` + movie.Year;
-    // movieItemElClone.querySelector('[data-element=movie-type]').textContent = `type: ` + movie.Type;
 
     let movieInfoBtn = movieItemElClone.querySelector('[data-element=movie-info]');
     movieInfoBtn.textContent = 'More info';
@@ -95,7 +95,7 @@ function cloneAndRender(movie) {
     })
     return movieItemElClone;
 }
-// renderMovies(movies, moviesRow)
+// renderMovies(films, moviesRow)
 
 // function cloneFilms(film) {
 //     let singleMovieTemplate = document.querySelector('#movie-item');
@@ -108,7 +108,6 @@ function cloneAndRender(movie) {
 //             movieImageEl.src = 'http://picsum.photos/200/200';
 //     })
 
-//     movieItemElClone.querySelector('[data-element=movie-id]').textContent = `id: ` + film.;
 //     movieItemElClone.querySelector('[data-element=movie-title]').textContent = `Title: ` + film.Title;
 //     movieItemElClone.querySelector('[data-element=movie-year]').textContent = `year: ` + film.Year;
 //     movieItemElClone.querySelector('[data-element=movie-type]').textContent = `type: ` + film.Type;
@@ -129,7 +128,7 @@ document.body.addEventListener('click', (event) => {
     // renderPagination();
     
     if(clickedEl.dataset.task === 'delete') {
-        bookmarkedMovie = bookmarkedMovie.filter(movie => movie.imdbID != event.target.dataset.todoId)
+        bookmarkedMovie = bookmarkedMovie.filter(movie => movie.imdbID != clickedEl.dataset.todoId)
         renderBookmarkTodos(bookmarkedMovie, todoListEl);
     }//ishladi
 
@@ -187,109 +186,25 @@ paginationEl.addEventListener('click', (event) => {
 })
    
 renderPagination();
-todoForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    var todoInput = document.querySelector('.form-control');
-    let valued = todoInput.value;
-    getMovies(valued).then((result) => {
-        moviesed = result.Search 
+   let typeSelect = document.querySelector('#movies-type')
+   typeSelect.addEventListener('change', (event) => {
+       selectValue = event.target.value
+   })
+   
+   
+   todoForm.addEventListener('submit', (event) => {
+       event.preventDefault();
+       var todoInput = document.querySelector('.movie-search');
+       let valued = todoInput.value;
+       let type = selectValue
+       getMovies(valued, type).then((result) => {
+        moviesed = result.Search
         moviesed.forEach((movie) => {
             films.push(movie)
             todoInput.value = '';
             renderMovies(films, moviesRow)
             renderPagination();
         })
-        // moviesed.forEach((movie) => {
-        //     films.innerHTML = false;
-        //     movie.forEach((move) => {
-        //         films.push(move)
-        //         todoInput.value = '';
-        //         renderMovies(films, moviesRow)
-        //         renderPagination();
-        //     })
-        // })
         renderMovies(films, moviesRow)
     }).catch(err => console.error(err))
 })
-
-
-
-
-
-
-
-function renderSortBookmarkedMovies(todosData){
-    todoListEl.innerHTML = null
-    if(todosData.length > 0){
-        todosData.forEach((movie, index) => {
-            let todoEl = createCloneTodo(movie)
-            todoListEl.appendChild(todoEl)
-        })
-    }else{
-        todoListEl.textContent = "Todos not found";
-    }
-}
-
-var itemPerpage = 10;
-var currentPage = 1;
-function renderTodos(todos=[], node) {
-    node.innerHTML = null;
-    todos.slice(itemPerpage * (currentPage - 1), currentPage * itemPerpage).forEach((todo) => {
-        node.appendChild(cloneAndRender(todo));
-    });
-};
-function sortAndRender(sortType = 1, sortBy = 1) {
-    films = films.sort((a, b) => {
-        switch(sortBy) {
-            case 1:
-                return sortType * (a.imdbID - b.imdbID);
-                case 2: return sortType * (a.Title.charCodeAt() - b.Title.charCodeAt());
-                case 3: return sortType * ( a.Year - b.Year);
-            default: return sortType *(a.imdbID - b.imdbID);
-        }
-    })
-    renderMovies(films, moviesRow);
-}
-function renderPagination() {
-    paginationEl.innerHTML = null;
-    
-    for(let i=1; i<= Math.ceil(films.length / itemPerpage); i++) {
-        let templatePageItem = document.querySelector('#pagination-item');
-        let pageItem = templatePageItem.content.cloneNode(true);
-        
-        let itemEl = pageItem.querySelector('.page-item');
-        if(i == currentPage) {
-            itemEl.classList.add('active');
-        }else{
-            itemEl.classList.remove('active');
-        }
-        
-        let linkEl = pageItem.querySelector('.page-link');
-        linkEl.textContent = i;
-        linkEl.dataset.pageId = i;
-        linkEl.dataset.task = 'page';
-        paginationEl.appendChild(pageItem);
-    }
-}
-function renderBookmarkTodos(todos=[], node) {
-    node.innerHTML = null;
-    todos.forEach((todo) => {
-        node.appendChild(createCloneTodo(todo));
-    })
-}
-function renderMovies(films=[], node) {
-    node.innerHTML = null;
-    
-    films.forEach((movie) => {
-        let movieItemEl =  cloneAndRender(movie);
-        node.appendChild(movieItemEl);
-    })
-};
-function renderModal(modal) {
-    let modalEl = document.querySelector('.my-modal');
-    let modalContent = modalEl.querySelector('.my-modal-content');
-    modalContent.innerHTML = null;
-    modalContent.appendChild(modal);    
-    modalEl.classList.add('my-modal--active')
-    return modalEl
-}

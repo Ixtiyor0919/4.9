@@ -3,7 +3,8 @@
     height: 50vh;
 }
 body {
-    background:#1565C0;
+    /* background:#1565C0; */
+    background-image: linear-gradient(to right, #293b8f, #152369, #0031e1, #07195a, #2956ff);
 }
 .form-wrapper {
     border-radius: 10px;
@@ -109,10 +110,11 @@ body {
     right: 30px;
     bottom: 30px;
 }
-.bookmark {
-    margin-left: 5px;
-}
 .movie-modal-img {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+}
+.modal-card-body {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }

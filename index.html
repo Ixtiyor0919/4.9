@@ -14,7 +14,7 @@
             <div class="border form-top-wrapper mb-3">
                 <div class="d-flex align-items-center mt-3 w-100 mb-2 m-auto">
                     <div class="col-9 me-auto">
-                        <input class="form-control bg-secondary" type="text" placeholder="Search movies">
+                        <input class="form-control bg-secondary movie-search" type="text" placeholder="Search movies">
                     </div>
                     <button class="btn btn-success col-2">Search</button>
                 </div>
@@ -47,11 +47,11 @@
                         </select>
                     </div>
                     <div class="col-3 ms-3">
-                        <select data-element="sort-type" class="form-select moviesOpts bg-secondary text-light">
-                            <option disabled selected>Type Sortlash</option>
-                            <option value="1" class="">Id bo'yicha</option>
-                            <option value="2">Nomi bo'yicha</option>
-                            <option value="3">Yili bo'yicha</option>
+                        <select id="movies-type" class="form-select bg-secondary text-light">
+                            <option disabled selected>Types</option>
+                            <option value="1" class="">Movie</option>
+                            <option value="2">Series</option>
+                            <!-- <option value="3">Episode</option> -->
                         </select>
                     </div>
                 </div>
@@ -68,7 +68,6 @@
     <div class="my-modal">
         <div class="my-modal-content position-relative border">
             <!-- Modal content -->
-            <!-- <button type="button" class="btn btn-secondary movie-modal-btn"></button> -->
         </div>
     </div>
 
@@ -98,43 +97,24 @@
                     <img data-element="movie-img" src="" class="card-image w-100" alt="">
                 </div>
                 <div class="card-body">
-                    <span data-element="movie-id" class="fw-bold text-light"></span>
-                    <span data-element="movie-id-films" class="fw-bold text-light"></span>
+                    <!-- <span data-element="movie-id" class="fw-bold text-light"></span> -->
                     <h3 data-element="movie-title" class="card-title fs-4 text-light"></h3>
                     <h3 data-element="movie-title-films" class="card-title fs-4 text-light"></h3>
-                    <!-- <span data-element="movie-year" class="fw-bold me-5 text-light"></span> -->
+                    <span data-element="movie-type" class="fw-bold me-5 text-light"></span>
                     <span data-element="movie-year-films" class="fw-bold text-light d-block"></span>
-                    <h5 data-element="movie-type" class="fw-bold text-light"></h5>
-                    <button data-element="movie-info" type="menu" class="movie-info-btn btn btn-info mt-2 text-light ms-3 me-3 bookmark"></button>
-                    <!-- <a type="submit" class="movie-btn btn btn-primary mt-2 me-3">Watch trailer</a> -->
-                    <button data-element="movie-bookmark" type="submit" class="movie-btn btn btn-success mt-2"></button>
+                    <div class="d-flex justify-content-center">
+                        <button data-element="movie-info" type="menu" class="movie-info-btn btn btn-info mt-2 text-light me-4"></button>
+                        <!-- <a type="submit" class="movie-btn btn btn-primary mt-2 me-3">Watch trailer</a> -->
+                        <button data-element="movie-bookmark" type="submit" class="movie-btn btn btn-success mt-2"></button>
+                    </div>
                 </div>
             </div>
         </div>
     </template>
-
-    <!-- //
-    <template id="movie-item-film">
-        <div class="col-6 card-items">
-            <div class="card card-inner h-100">
-                <div class="card-img">
-                    <img data-element="movie-img" src="" class="card-image w-100" alt="">
-                </div>
-                <div class="card-body">
-                    <span data-element="movie-id" class="fw-bold text-light"></span>
-                    <h3 data-element="movie-title" class="card-title fs-4 text-light"></h3>
-                    <span data-element="movie-year" class="fw-bold me-5 text-light"></span>
-                    <h5 data-element="movie-type" class="fw-bold text-light"></h5>
-                    <button data-element="movie-info" type="menu" class="movie-info-btn btn btn-info mt-2 text-light ms-3 me-3 bookmark"></button>
-                    <a type="submit" class="movie-btn btn btn-primary mt-2 me-3">Watch trailer</a>
-                    <button data-element="movie-bookmark" type="submit" class="movie-btn btn btn-success mt-2"></button>
-                </div>
-            </div>
-        </div>
-    </template> -->
+    
     <template id="modal-template">
             <img src="" alt="" class="movie-modal-img">
-            <div class="card-body border bg-light">
+            <div class="card-body border bg-light modal-card-body">
                 <p class="movie-modal-id text-black fw-bold"></p>
                 <h3 class="movie-modal-title"></h3>
                 <h4 class="movie-modal-director"></h4>
@@ -147,7 +127,7 @@
     </template>
     <script src="./js/http.js"></script>
     <script src="./js/movies.js"></script>
-    <script src="./js/main.js"></script>
     <script src="./js/utils.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>

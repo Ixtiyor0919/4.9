@@ -204,6 +204,6 @@ renderPagination();
                renderPagination();
             })
             renderMovies(films, moviesRow)
-            // typeSelect.value = '';
+            typeSelect.value = '';
     }).catch(err => console.error(err))
 })

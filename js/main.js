@@ -186,25 +186,24 @@ paginationEl.addEventListener('click', (event) => {
 })
    
 renderPagination();
-   let typeSelect = document.querySelector('#movies-type')
+   var typeSelect = document.querySelector('#movies-type')
    typeSelect.addEventListener('change', (event) => {
-       selectValue = event.target.value
+       type = event.target.value
    })
-   
    
    todoForm.addEventListener('submit', (event) => {
        event.preventDefault();
        var todoInput = document.querySelector('.movie-search');
        let valued = todoInput.value;
-       let type = selectValue
        getMovies(valued, type).then((result) => {
-        moviesed = result.Search
-        moviesed.forEach((movie) => {
-            films.push(movie)
-            todoInput.value = '';
+           moviesed = result.Search
+           moviesed.forEach((movie) => {
+               films.push(movie)
+               todoInput.value = '';
+               renderMovies(films, moviesRow)
+               renderPagination();
+            })
             renderMovies(films, moviesRow)
-            renderPagination();
-        })
-        renderMovies(films, moviesRow)
+            // typeSelect.value = '';
     }).catch(err => console.error(err))
 })
